@@ -9,7 +9,7 @@ function App() {
   */
   // 용승, 진호, 명섭, 민석, 유나, 미래
   const [members, setMembers] = useState([]);
-  const [memberSelector, setMemberSelector] = useState('1');
+  const [memberSelector, setMemberSelector] = useState('0');
 
   // memberBtn onClick
   const handlerOnClickMemberSelector = (id) => {
