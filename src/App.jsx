@@ -1,4 +1,3 @@
-import styled from 'styled-components';
 import { Router } from './shared/Router';
 import { getMembers } from './common/util';
 import { useEffect, useState } from 'react';
@@ -26,7 +25,11 @@ function App() {
     <StContainer>
       <Router
         members={members}
-        membersBtnSelector={{ memberSelector, handlerOnClickMemberSelector }}
+        membersBtnSelector={{
+          memberSelector,
+          handlerOnClickMemberSelector,
+          setMemberSelector,
+        }}
       />
     </StContainer>
   );

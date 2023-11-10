@@ -6,4 +6,5 @@ export const StContainer = styled.section`
   width: 100%;
   box-shadow: inset 0 0 2rem red;
   margin: 0 auto;
+  padding-bottom: 10rem;
 `;

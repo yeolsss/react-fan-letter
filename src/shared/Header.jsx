@@ -1,9 +1,10 @@
+import React from 'react';
 import HeaderButton from '../components/header/HeaderButton';
 import { StHeader, StNav } from '../styles/header/StHeader';
 
 function Header({ members, membersBtnSelector }) {
   // 용승, 진호, 명섭, 민석, 유나, 미래
-
+  console.log('header render');
   return (
     <StHeader>
       <h1>판교행버스</h1>
@@ -23,4 +24,4 @@ function Header({ members, membersBtnSelector }) {
   );
 }
 
-export default Header;
+export default React.memo(Header);

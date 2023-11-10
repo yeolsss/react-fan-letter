@@ -13,8 +13,9 @@ function Member(id, name, img) {
   this.img = img;
 }
 
-export function Letter(id, nickName, content, date) {
+export function Letter(id, memberId, nickName, content, date) {
   this.id = id;
+  this.memberId = memberId;
   this.nickName = nickName;
   this.content = content;
   this.date = date;

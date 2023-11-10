@@ -50,6 +50,23 @@ export const GlobalStyle = createGlobalStyle`
 		border-collapse: collapse;
 		border-spacing: 0;
 	}
+
+	select{
+		border: none;
+		outline: none;
+	}
+
+	input, textarea{
+		border: none;
+		outline: none;
+	}
+
+	button{
+		border: none;
+		outline: none;
+		cursor: pointer;
+	}
+
 	/* typography */
 	:root {
 		--text-color: #353b48;
