@@ -3,6 +3,7 @@ import { LETTER_LOCAL_STORAGE_KEY, getMembers } from './common/util';
 import { useEffect, useState } from 'react';
 import { StContainer } from './styles/Container';
 import { LetterContext } from './context/LetterContext';
+import dumyData from '../common/fakeData.json';
 
 function App() {
   /* 
