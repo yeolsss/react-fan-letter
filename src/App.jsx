@@ -18,9 +18,7 @@ function App() {
 
   const [letterList, setLetterList] = useState(letters);
   // memberList useEffect
-  useEffect(() => {
-    setMembers(getMembers);
-  }, []);
+
   const stateObject = {
     members: {
       members,
