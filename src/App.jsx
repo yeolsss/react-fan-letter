@@ -1,7 +1,8 @@
 import { Router } from './shared/Router';
-import { getMembers } from './common/util';
+import { LETTER_LOCAL_STORAGE_KEY, getMembers } from './common/util';
 import { useEffect, useState } from 'react';
 import { StContainer } from './styles/Container';
+import { LetterContext } from './context/LetterContext';
 
 function App() {
   /* 
@@ -10,28 +11,36 @@ function App() {
   // 용승, 진호, 명섭, 민석, 유나, 미래
   const [members, setMembers] = useState([]);
   const [memberSelector, setMemberSelector] = useState('0');
+  // ! localStorage get data
+  // ! 빈 값일 경우 dumyData로 초기화
+  const letters =
+    JSON.parse(localStorage.getItem(LETTER_LOCAL_STORAGE_KEY)) || dumyData;
 
-  // memberBtn onClick
-  const handlerOnClickMemberSelector = (id) => {
-    setMemberSelector(id);
-  };
-
+  const [letterList, setLetterList] = useState(letters);
   // memberList useEffect
   useEffect(() => {
     setMembers(getMembers);
   }, []);
-
+  const stateObject = {
+    members: {
+      members,
+      setMembers,
+    },
+    memberSelector: {
+      memberSelector,
+      setMemberSelector,
+    },
+    letterList: {
+      letterList,
+      setLetterList,
+    },
+  };
   return (
-    <StContainer>
-      <Router
-        members={members}
-        membersBtnSelector={{
-          memberSelector,
-          handlerOnClickMemberSelector,
-          setMemberSelector,
-        }}
-      />
-    </StContainer>
+    <LetterContext.Provider value={stateObject}>
+      <StContainer>
+        <Router />
+      </StContainer>
+    </LetterContext.Provider>
   );
 }
 

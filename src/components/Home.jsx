@@ -5,26 +5,18 @@ import {
   StEmptyDataLi,
   StLetterList,
 } from '../styles/main/StHome';
+import { useContext } from 'react';
+import { LetterContext } from '../context/LetterContext';
 
-function Home({
-  members,
-  onSubmitLetter,
-  handlers,
-  states,
-  memberSelectBox,
-  refs,
-  currentMemberLetter,
-}) {
+function Home() {
+  const { memberSelector, letterList } = useContext(LetterContext);
+  const getLetterList = letterList.letterList;
+  const currentMemberLetter = getLetterList.filter(
+    (letter) => letter.writedTo === memberSelector.memberSelector,
+  );
   return (
     <StContainer>
-      <LetterForm
-        members={members}
-        onSubmitLetter={onSubmitLetter}
-        handlers={handlers}
-        states={states}
-        memberSelectBox={memberSelectBox}
-        refs={refs}
-      />
+      <LetterForm />
       <StLetterList>
         {currentMemberLetter.length === 0 ? (
           <StEmptyDataLi>

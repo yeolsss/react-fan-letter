@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import Avatar from './Avatar';
-import { useEffect } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import {
   StButtonWrapper,
   StContentForm,
@@ -8,30 +8,76 @@ import {
   StMemberNameWrapper,
   StWriterInfoWrapper,
 } from '../styles/detail/StDetail';
+import { LetterContext } from '../context/LetterContext';
+import { LETTER_LOCAL_STORAGE_KEY, validData } from '../common/util';
 
-function Detail({
-  members,
-  currentMemberLetter,
-  updateProps,
-  handleDeleteBtn,
-}) {
+function Detail() {
   const { id: parmaId } = useParams();
-  const letter = currentMemberLetter.find((letter) => letter.id === parmaId);
-  const { id, writedTo, nickname, content, createdAt, avatar } = letter;
+  const { members, letterList } = useContext(LetterContext);
 
-  const member = members[Number(writedTo)];
+  const letter = letterList.letterList.find((letter) => letter.id === parmaId);
+
+  const { id, writedTo, nickname, content, createdAt, avatar } = letter;
+  const member = members.members[Number(writedTo)];
   const { name } = member;
 
-  // * useHistory
+  // * useHistory1
   const navigate = useNavigate();
 
+  // * letter update textarea state
+  const [letterUpdateContent, setLetterUpdateContent] = useState('');
+  // * letter update btn state
+  const [updateState, setUpdateState] = useState(false);
+
+  const updateLetterContentRef = useRef(null);
+
   const handleOnSubmitDeleteLetter = (e) => {
-    handleDeleteBtn(e.target.dataset.id);
+    const id = e.target.dataset.id;
+
+    const newLetterList = letterList.letterList.filter(
+      (letter) => letter.id !== id,
+    );
+    localStorage.setItem(
+      LETTER_LOCAL_STORAGE_KEY,
+      JSON.stringify(newLetterList),
+    );
+    letterList.setLetterList([...newLetterList]);
+    alert('삭제되었습니다.');
+
     navigate('/');
+  };
+  // letter 수정
+  const handleOnChangeUpdateLetter = (e) => {
+    setLetterUpdateContent(e.target.value);
+  };
+
+  const handleOnSubmitUpdateLetter = (e) => {
+    e.preventDefault();
+    if (validData(letterUpdateContent, '내용', updateLetterContentRef)) return;
+
+    const id = e.target.dataset.id;
+
+    const newLetterList = letterList.letterList.map((letter) => {
+      if (letter.id === id) {
+        letter.content = letterUpdateContent.replaceAll('\n', '<br>');
+      }
+      return letter;
+    });
+    localStorage.setItem(
+      LETTER_LOCAL_STORAGE_KEY,
+      JSON.stringify(newLetterList),
+    );
+    letterList.setLetterList([...newLetterList]);
+    setUpdateState(false);
+  };
+
+  // letter 수정 버튼
+  const handleOnClickUpdateBtn = () => {
+    setUpdateState(true);
   };
 
   useEffect(() => {
-    updateProps.setLetterUpdateContent(content.replaceAll('<br>', '\n'));
+    setLetterUpdateContent(content.replaceAll('<br>', '\n'));
   }, []);
 
   return (
@@ -50,29 +96,26 @@ function Detail({
         </StMemberNameWrapper>
 
         <StContentForm>
-          {updateProps.updateState ? (
+          {updateState ? (
             <textarea
               maxLength={100}
-              value={updateProps.letterUpdateContent}
-              onChange={updateProps.handleOnChangeUpdateLetter}
-              ref={updateProps.updateLetterContentRef}
+              value={letterUpdateContent}
+              onChange={handleOnChangeUpdateLetter}
+              ref={updateLetterContentRef}
             ></textarea>
           ) : (
             <p>{content.replaceAll('<br>', '\n')}</p>
           )}
         </StContentForm>
         <StButtonWrapper>
-          {updateProps.updateState ? (
+          {updateState ? (
             <Button
               dataId={id}
-              handler={updateProps.handleOnSubmitUpdateLetter}
+              handler={handleOnSubmitUpdateLetter}
               btnTitle={'완료'}
             />
           ) : (
-            <Button
-              btnTitle={'수정'}
-              handler={updateProps.handleOnClickUpdateBtn}
-            />
+            <Button btnTitle={'수정'} handler={handleOnClickUpdateBtn} />
           )}
 
           <Button

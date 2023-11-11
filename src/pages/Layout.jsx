@@ -1,10 +1,10 @@
 import { Outlet } from 'react-router-dom';
 import Header from '../shared/Header';
 
-function Layout({ members, membersBtnSelector }) {
+function Layout() {
   return (
     <>
-      <Header members={members} membersBtnSelector={membersBtnSelector} />
+      <Header />
       <Outlet />
     </>
   );

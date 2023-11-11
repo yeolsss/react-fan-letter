@@ -1,14 +1,20 @@
 import { useMatch } from 'react-router-dom';
 import { StHeaderBtnLi } from '../../styles/header/StHeader';
+import { useContext } from 'react';
+import { LetterContext } from '../../context/LetterContext';
 
-function HeaderButton({ membersBtnSelector, children }) {
-  const { memberSelector, handlerOnClickMemberSelector } = membersBtnSelector;
+function HeaderButton({ children }) {
+  const { memberSelector } = useContext(LetterContext);
+
   const match = useMatch('/detail/:id');
 
+  const handlerOnClickMemberSelector = (id) => {
+    memberSelector.setMemberSelector(id);
+  };
   return (
     <StHeaderBtnLi
       key={children.id}
-      $thisMemberId={children.id === memberSelector}
+      $thisMemberId={children.id === memberSelector.memberSelector}
     >
       {!match ? (
         <button onClick={() => handlerOnClickMemberSelector(children.id)}>
