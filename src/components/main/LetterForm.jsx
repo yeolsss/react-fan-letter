@@ -1,17 +1,17 @@
 import MultiButton from '../MultiButton';
 import { StForm, StSelector } from '../../styles/StInputForm';
-import { useContext, useEffect, useRef, useState } from 'react';
-import { LetterContext } from '../../context/LetterContext';
-import {
-  LETTER_LOCAL_STORAGE_KEY,
-  Letter,
-  getDate,
-  validData,
-} from '../../common/util';
+import { useEffect, useRef, useState } from 'react';
+import { Letter, getDate, validData } from '../../common/util';
 import { v4 as uuidv4 } from 'uuid';
+import {useDispatch, useSelector} from 'react-redux';
+import {addLetter} from "../../redux/config/module/letter.js";
+import {setCurrentMember} from "../../redux/config/module/member.js";
 
 function LetterForm() {
-  const { members, memberSelector, letterList } = useContext(LetterContext);
+
+  const member = useSelector((state) => state.member);
+  const letters = useSelector((state) => state.letter);
+
   // * letter NickName state
   const [letterNickName, setLetterNickName] = useState('');
   // * letter content state
@@ -23,6 +23,8 @@ function LetterForm() {
   const letterNickNameRef = useRef(null);
   const letterContentRef = useRef(null);
 
+  const dispatch = useDispatch();
+
   const onChangeLetterNickName = (e) => {
     setLetterNickName(e.target.value);
   };
@@ -33,7 +35,7 @@ function LetterForm() {
   // selectbox controll
   const onChangeMemberSelectBox = (e) => {
     const memberId = e.target.value;
-    data.memberSelector.setMemberSelector(memberId);
+    dispatch(setCurrentMember(memberId));
     setMemberSelectBox(memberId);
   };
 
@@ -49,7 +51,7 @@ function LetterForm() {
       return;
 
     const id = uuidv4();
-    const mumberId = memberSelector.memberSelector;
+    const mumberId = member.currentMember;
     let letter = new Letter(
       id,
       mumberId,
@@ -57,20 +59,16 @@ function LetterForm() {
       letterContent.replaceAll('\n', '<br>'),
       getDate(),
     );
-    const newLetterList = [letter, ...letterList.letterList];
-    localStorage.setItem(
-      LETTER_LOCAL_STORAGE_KEY,
-      JSON.stringify(newLetterList),
-    );
-    letterList.setLetterList(newLetterList);
+
+    dispatch(addLetter(letter));
 
     setLetterNickName('');
     setLetterContent('');
   };
 
   useEffect(() => {
-    setMemberSelectBox(memberSelector.memberSelector);
-  }, [memberSelector.memberSelector]);
+    setMemberSelectBox(member.currentMember);
+  }, [member.currentMember]);
   return (
     <StForm onSubmit={onSubmitLetter}>
       <StSelector>
@@ -80,7 +78,7 @@ function LetterForm() {
           value={memberSelectBox}
           onChange={onChangeMemberSelectBox}
         >
-          {members.members.map((member) => (
+          {member.getMembers.map((member) => (
             <option key={member.id} value={member.id}>
               {member.name}
             </option>

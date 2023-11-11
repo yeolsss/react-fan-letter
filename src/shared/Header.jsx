@@ -1,13 +1,14 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import HeaderButton from '../components/header/HeaderButton';
 import { StHeader, StHomeBtn, StNav } from '../styles/header/StHeader';
 import { useMatch, useNavigate } from 'react-router-dom';
-import { LetterContext } from '../context/LetterContext';
+import { useSelector } from 'react-redux';
 
 function Header() {
   // 용승, 진호, 명섭, 민석, 유나, 미래
+  const member = useSelector((state) => state.member);
+
   const navigate = useNavigate();
-  const { members } = useContext(LetterContext);
   const match = useMatch('/detail/:id');
   const handleOnClickHomeBtn = () => {
     navigate('/');
@@ -22,7 +23,7 @@ function Header() {
       </div>
       <StNav>
         <ul>
-          {members.members.map((member) => (
+          {member.getMembers.map((member) => (
             <HeaderButton key={member.id}>{member}</HeaderButton>
           ))}
         </ul>

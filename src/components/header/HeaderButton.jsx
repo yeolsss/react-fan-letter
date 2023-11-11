@@ -1,20 +1,19 @@
 import { useMatch } from 'react-router-dom';
 import { StHeaderBtnLi } from '../../styles/header/StHeader';
-import { useContext } from 'react';
-import { LetterContext } from '../../context/LetterContext';
+import { useDispatch, useSelector } from 'react-redux';
+import {setCurrentMember} from "../../redux/config/module/member.js";
 
 function HeaderButton({ children }) {
-  const { memberSelector } = useContext(LetterContext);
-
+  const member = useSelector((state) => state.member);
   const match = useMatch('/detail/:id');
-
+  const dispatch = useDispatch();
   const handlerOnClickMemberSelector = (id) => {
-    memberSelector.setMemberSelector(id);
+    dispatch(setCurrentMember(id));
   };
   return (
     <StHeaderBtnLi
       key={children.id}
-      $thisMemberId={children.id === memberSelector.memberSelector}
+      $thisMemberId={children.id === member.currentMember}
     >
       {!match ? (
         <button onClick={() => handlerOnClickMemberSelector(children.id)}>

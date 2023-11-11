@@ -1,5 +1,3 @@
-export const LETTER_LOCAL_STORAGE_KEY = 'fan_letter';
-
 export const getMembers = [
   new Member('0', '권경열', ''),
   new Member('1', '송용승', ''),

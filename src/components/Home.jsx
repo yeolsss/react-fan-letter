@@ -5,14 +5,14 @@ import {
   StEmptyDataLi,
   StLetterList,
 } from '../styles/main/StHome';
-import { useContext } from 'react';
-import { LetterContext } from '../context/LetterContext';
+import { useSelector } from 'react-redux';
 
 function Home() {
-  const { memberSelector, letterList } = useContext(LetterContext);
-  const getLetterList = letterList.letterList;
-  const currentMemberLetter = getLetterList.filter(
-    (letter) => letter.writedTo === memberSelector.memberSelector,
+  const member = useSelector((state) => state.member);
+  const letters = useSelector((state) => state.letter);
+
+  const currentMemberLetter = letters.filter(
+    (letter) => letter.writedTo === member.currentMember,
   );
   return (
     <StContainer>

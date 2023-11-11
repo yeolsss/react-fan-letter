@@ -1,6 +1,7 @@
 import { useNavigate, useParams } from 'react-router-dom';
-import Avatar from './Avatar';
 import { useContext, useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import Avatar from './Avatar';
 import {
   StButtonWrapper,
   StContentForm,
@@ -8,17 +9,18 @@ import {
   StMemberNameWrapper,
   StWriterInfoWrapper,
 } from '../styles/detail/StDetail';
-import { LetterContext } from '../context/LetterContext';
-import { LETTER_LOCAL_STORAGE_KEY, validData } from '../common/util';
+import { validData } from '../common/util';
+import { deleteLetter, updateLetter } from '../redux/config/module/letter.js';
 
 function Detail() {
   const { id: parmaId } = useParams();
-  const { members, letterList } = useContext(LetterContext);
-
-  const letter = letterList.letterList.find((letter) => letter.id === parmaId);
+  const members = useSelector((state) => state.member);
+  const letterList = useSelector((state) => state.letter);
+  const dispatch = useDispatch();
+  const letter = letterList.find((letter) => letter.id === parmaId);
 
   const { id, writedTo, nickname, content, createdAt, avatar } = letter;
-  const member = members.members[Number(writedTo)];
+  const member = members.getMembers[Number(writedTo)];
   const { name } = member;
 
   // * useHistory1
@@ -32,18 +34,9 @@ function Detail() {
   const updateLetterContentRef = useRef(null);
 
   const handleOnSubmitDeleteLetter = (e) => {
-    const id = e.target.dataset.id;
-
-    const newLetterList = letterList.letterList.filter(
-      (letter) => letter.id !== id,
-    );
-    localStorage.setItem(
-      LETTER_LOCAL_STORAGE_KEY,
-      JSON.stringify(newLetterList),
-    );
-    letterList.setLetterList([...newLetterList]);
+    const { id } = e.target.dataset;
+    dispatch(deleteLetter(id));
     alert('삭제되었습니다.');
-
     navigate('/');
   };
   // letter 수정
@@ -55,19 +48,13 @@ function Detail() {
     e.preventDefault();
     if (validData(letterUpdateContent, '내용', updateLetterContentRef)) return;
 
-    const id = e.target.dataset.id;
-
-    const newLetterList = letterList.letterList.map((letter) => {
-      if (letter.id === id) {
-        letter.content = letterUpdateContent.replaceAll('\n', '<br>');
-      }
-      return letter;
-    });
-    localStorage.setItem(
-      LETTER_LOCAL_STORAGE_KEY,
-      JSON.stringify(newLetterList),
+    const { id } = e.target.dataset;
+    dispatch(
+      updateLetter({
+        id,
+        content: letterUpdateContent.replaceAll('\n', '<br>'),
+      }),
     );
-    letterList.setLetterList([...newLetterList]);
     setUpdateState(false);
   };
 
@@ -131,10 +118,8 @@ function Detail() {
 
 export default Detail;
 
-const Button = ({ btnTitle, handler, dataId = '' }) => {
-  return (
-    <button data-id={dataId} onClick={handler}>
-      {btnTitle}
-    </button>
-  );
-};
+const Button = ({ btnTitle, handler, dataId = '' }) => (
+  <button data-id={dataId} onClick={handler}>
+    {btnTitle}
+  </button>
+);
