@@ -67,6 +67,10 @@ export const GlobalStyle = createGlobalStyle`
 		cursor: pointer;
 	}
 
+	a {
+		text-decoration: none;
+	}
+
 	/* typography */
 	:root {
 		--text-color: #353b48;

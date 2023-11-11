@@ -1,6 +1,6 @@
 import Home from '../components/Home';
 import Detail from '../components/Detail';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, useNavigate } from 'react-router-dom';
 import Layout from '../pages/Layout';
 import { useEffect, useRef, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
@@ -19,9 +19,18 @@ export const Router = ({ members, membersBtnSelector }) => {
   const [letterContent, setLetterContent] = useState('');
   // * member selectbox state 멤버 셀렉트 박스 선택
   const [memberSelectBox, setMemberSelectBox] = useState();
+  // * letter update textarea state
+  const [letterUpdateContent, setLetterUpdateContent] = useState('');
+  // * letter update btn state
+  const [updateState, setUpdateState] = useState(false);
+
+  // * set ref
+  const letterNickNameRef = useRef(null);
+  const letterContentRef = useRef(null);
+  const updateLetterContentRef = useRef(null);
 
   // ! localStorage get data
-  // ! 빈 값일 경우 빈 배열로 초기화
+  // ! 빈 값일 경우 dumyData로 초기화
   const letters =
     JSON.parse(localStorage.getItem(LETTER_LOCAL_STORAGE_KEY)) || dumyData;
 
@@ -37,9 +46,6 @@ export const Router = ({ members, membersBtnSelector }) => {
   const onChangeLetterContent = (e) => {
     setLetterContent(e.target.value);
   };
-
-  const letterNickNameRef = useRef(null);
-  const letterContentRef = useRef(null);
 
   // selectbox controll
   const onChangeMemberSelectBox = (e) => {
@@ -78,6 +84,44 @@ export const Router = ({ members, membersBtnSelector }) => {
     setLetterNickName('');
     setLetterContent('');
   };
+  // letter 수정 버튼
+  const handleOnClickUpdateBtn = () => {
+    setUpdateState(true);
+  };
+  // letter 수정
+  const handleOnChangeUpdateLetter = (e) => {
+    setLetterUpdateContent(e.target.value);
+  };
+  const handleOnSubmitUpdateLetter = (e) => {
+    e.preventDefault();
+    if (validData(letterUpdateContent, '내용', updateLetterContentRef)) return;
+
+    const id = e.target.dataset.id;
+
+    const newLetterList = letterList.map((letter) => {
+      if (letter.id === id) {
+        letter.content = letterUpdateContent.replaceAll('\n', '<br>');
+      }
+      return letter;
+    });
+    localStorage.setItem(
+      LETTER_LOCAL_STORAGE_KEY,
+      JSON.stringify(newLetterList),
+    );
+    setLetterList([...newLetterList]);
+    setUpdateState(false);
+  };
+
+  // 삭제
+  const handleDeleteBtn = (id) => {
+    const newLetterList = letterList.filter((letter) => letter.id !== id);
+    localStorage.setItem(
+      LETTER_LOCAL_STORAGE_KEY,
+      JSON.stringify(newLetterList),
+    );
+    setLetterList([...newLetterList]);
+    alert('삭제되었습니다.');
+  };
 
   useEffect(() => {
     setMemberSelectBox(membersBtnSelector.memberSelector);
@@ -106,7 +150,26 @@ export const Router = ({ members, membersBtnSelector }) => {
               />
             }
           />
-          <Route exact path=":id" element={<Detail members={members} />} />
+          <Route
+            exact
+            path="/detail/:id"
+            element={
+              <Detail
+                members={members}
+                currentMemberLetter={currentMemberLetter}
+                updateProps={{
+                  letterUpdateContent,
+                  handleOnChangeUpdateLetter,
+                  setLetterUpdateContent,
+                  updateLetterContentRef,
+                  handleOnSubmitUpdateLetter,
+                  handleOnClickUpdateBtn,
+                  updateState,
+                }}
+                handleDeleteBtn={handleDeleteBtn}
+              />
+            }
+          />
         </Route>
       </Routes>
     </BrowserRouter>
