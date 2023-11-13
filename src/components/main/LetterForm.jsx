@@ -1,16 +1,14 @@
+import { useEffect, useRef, useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
+import { useDispatch, useSelector } from 'react-redux';
 import MultiButton from '../MultiButton';
 import { StForm, StSelector } from '../../styles/StInputForm';
-import { useEffect, useRef, useState } from 'react';
 import { Letter, getDate, validData } from '../../common/util';
-import { v4 as uuidv4 } from 'uuid';
-import {useDispatch, useSelector} from 'react-redux';
-import {addLetter} from "../../redux/config/module/letter.js";
-import {setCurrentMember} from "../../redux/config/module/member.js";
+import { addLetter } from '../../redux/config/module/letter.js';
+import { setCurrentMember } from '../../redux/config/module/member.js';
 
 function LetterForm() {
-
   const member = useSelector((state) => state.member);
-  const letters = useSelector((state) => state.letter);
 
   // * letter NickName state
   const [letterNickName, setLetterNickName] = useState('');
@@ -52,7 +50,7 @@ function LetterForm() {
 
     const id = uuidv4();
     const mumberId = member.currentMember;
-    let letter = new Letter(
+    const letter = new Letter(
       id,
       mumberId,
       letterNickName,

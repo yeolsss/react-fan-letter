@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from 'react-router-dom';
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Avatar from './Avatar';
 import {
@@ -14,6 +14,7 @@ import { deleteLetter, updateLetter } from '../redux/config/module/letter.js';
 
 function Detail() {
   const { id: parmaId } = useParams();
+
   const members = useSelector((state) => state.member);
   const letterList = useSelector((state) => state.letter);
   const dispatch = useDispatch();

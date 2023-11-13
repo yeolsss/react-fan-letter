@@ -11,6 +11,7 @@ const initialState = {
   getMembers,
   currentMember: getMembers[0].id,
 };
+
 const member = (state = initialState, action) => {
   switch (action.type) {
     case SetCurrentMember:
