@@ -1,14 +1,16 @@
+import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { getDate } from '../../common/util';
 import Avatar from '../Avatar';
 import {
   StLetterCard,
   StLetterInfo,
 } from '../../styles/main/StLetterCardComponent';
-import { Link } from 'react-router-dom';
 
 function LetterCard({ children }) {
+  const { currentMember } = useSelector((state) => state.member);
   return (
-    <Link to={`/detail/${children.id}`}>
+    <Link to={`/detail/${currentMember}/${children.id}`}>
       <StLetterCard>
         <Avatar imgPath={children.avatar} />
         <StLetterInfo>

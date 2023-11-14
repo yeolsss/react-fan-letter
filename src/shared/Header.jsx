@@ -3,11 +3,12 @@ import { useMatch, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import HeaderButton from '../components/header/HeaderButton';
 import { StHeader, StHomeBtn, StNav } from '../styles/header/StHeader';
+import { DETAIL_PATH } from '../common/util';
 
 function Header() {
   const member = useSelector((state) => state.member);
   const navigate = useNavigate();
-  const match = useMatch('/detail/:id');
+  const match = useMatch(DETAIL_PATH);
 
   const handleOnClickHomeBtn = () => {
     navigate('/');

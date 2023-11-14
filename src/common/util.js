@@ -1,3 +1,4 @@
+export const DETAIL_PATH = '/detail/:memberId/:id';
 export const getMembers = [
   new Member('0', '권경열', ''),
   new Member('1', '송용승', ''),
@@ -31,7 +32,7 @@ export function Letter(
 
 // 날짜 만들기
 export const getDate = (setDate = '') => {
-  let today = setDate === '' ? new Date() : new Date(setDate);
+  const today = setDate === '' ? new Date() : new Date(setDate);
 
   const year = String(today.getFullYear()); // 년도
   const month = String(today.getMonth() + 1).padStart(2, '0'); // 월

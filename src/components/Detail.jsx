@@ -11,13 +11,17 @@ import {
 } from '../styles/detail/StDetail';
 import { validData } from '../common/util';
 import { deleteLetter, updateLetter } from '../redux/config/module/letter.js';
+import { setCurrentMember } from '../redux/config/module/member.js';
 
 function Detail() {
-  const { id: parmaId } = useParams();
+  const { id: parmaId, memberId } = useParams();
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(setCurrentMember(memberId));
+  }, []);
 
   const members = useSelector((state) => state.member);
   const letterList = useSelector((state) => state.letter);
-  const dispatch = useDispatch();
   const letter = letterList.find((letter) => letter.id === parmaId);
 
   const { id, writedTo, nickname, content, createdAt, avatar } = letter;
