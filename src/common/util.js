@@ -3,11 +3,12 @@ export const LETTER_LOCAL_STORAGE_KEY = 'fan_letter';
 export const getMembers = [
   new Member('0', '권경열', ''),
   new Member('1', '송용승', ''),
-  new Member('2', '전민석', ''),
-  new Member('3', '박유나', ''),
-  new Member('4', '이진호', ''),
-  new Member('5', '조미래', ''),
-  new Member('6', '김명섭', ''),
+  new Member('2', '최문길', ''),
+  new Member('3', '전민석', ''),
+  new Member('4', '박유나', ''),
+  new Member('5', '이진호', ''),
+  new Member('6', '조미래', ''),
+  new Member('7', '김명섭', ''),
 ];
 function Member(id, name, avatar) {
   this.id = id;
@@ -33,7 +34,7 @@ export function Letter(
 
 // 날짜 만들기
 export const getDate = (setDate = '') => {
-  let today = setDate === '' ? new Date() : new Date(setDate);
+  const today = setDate === '' ? new Date() : new Date(setDate);
 
   const year = String(today.getFullYear()); // 년도
   const month = String(today.getMonth() + 1).padStart(2, '0'); // 월
