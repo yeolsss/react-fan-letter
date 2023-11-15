@@ -1,9 +1,9 @@
-import Home from '../components/Home';
-import Detail from '../components/Detail';
-import { BrowserRouter, Route, Routes, useNavigate } from 'react-router-dom';
-import Layout from '../pages/Layout';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import Home from '../components/Home';
+import Detail from '../components/Detail';
+import Layout from '../pages/Layout';
 import {
   LETTER_LOCAL_STORAGE_KEY,
   Letter,
@@ -67,7 +67,7 @@ export const Router = ({ members, membersBtnSelector }) => {
 
     const id = uuidv4();
     const mumberId = membersBtnSelector.memberSelector;
-    let letter = new Letter(
+    const letter = new Letter(
       id,
       mumberId,
       letterNickName,
@@ -96,7 +96,7 @@ export const Router = ({ members, membersBtnSelector }) => {
     e.preventDefault();
     if (validData(letterUpdateContent, '내용', updateLetterContentRef)) return;
 
-    const id = e.target.dataset.id;
+    const { id } = e.target.dataset;
 
     const newLetterList = letterList.map((letter) => {
       if (letter.id === id) {
