@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import backImg from '../../assets/300px-Q486846_Pangyo_A01.png';
 
 export const StHeader = styled.header`
   position: relative;
@@ -14,7 +15,7 @@ export const StHeader = styled.header`
     z-index: -1;
   }
   > div > div {
-    background-image: url('/src/assets/300px-Q486846_Pangyo_A01.png');
+    background-image: url(${backImg});
     background-repeat: no-repeat;
     background-size: 100%;
     background-position-y: -24rem;
