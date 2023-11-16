@@ -1,8 +1,15 @@
-# React + Vite
+# 팬레터 개인과제
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+좋아하는 아티스트 그룹이 없어서 캠프내에서 판교를 가기위한 스터디 하는 그룹원들을 대상으로 작성함.
 
-Currently, two official plugins are available:
+## 주요 기능
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- 각 인원별 응원 메세지 작성
+- 메세지 작성시 select로 인원 선택시 헤더에 인원 버튼 이동(선택한 인원이 누군지 확실히 알기위해 적용)
+- 디테일 페이지에서 수정 삭제 기능
+
+## 스크린샷
+
+![Alt text](<Screen Shot 2023-11-15 at 8.30.54 PM.png>)
+
+![Alt text](<Screen Shot 2023-11-15 at 8.32.16 PM.png>)
