@@ -6,6 +6,14 @@ import {
   StLetterList,
 } from '../styles/main/StHome';
 import { useSelector } from 'react-redux';
+import {
+  ProgressCircle,
+  ProgressInner,
+  ProgressText,
+  ProgressWrapper,
+} from './ProgressCircle';
+import { AnimationWrapper, LoadingText, TrainImage } from './TrainProgress';
+import train from '../assets/free-icon-train-1008150.png';
 
 function Home() {
   const member = useSelector((state) => state.member);
@@ -17,6 +25,17 @@ function Home() {
   return (
     <StContainer>
       <LetterForm />
+      {/* <ProgressWrapper>
+        <ProgressCircle />
+        <ProgressInner />
+        <ProgressText>로딩 중...</ProgressText>
+      </ProgressWrapper>
+      <>
+        <AnimationWrapper>
+          <TrainImage src={train} alt="Loading Train" />
+          <LoadingText>Loading...</LoadingText>
+        </AnimationWrapper>
+      </> */}
       <StLetterList>
         {currentMemberLetter.length === 0 ? (
           <StEmptyDataLi>
