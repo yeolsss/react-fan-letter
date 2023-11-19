@@ -8,6 +8,7 @@ import {
   StMemberNameWrapper,
   StWriterInfoWrapper,
 } from '../styles/detail/StDetail';
+import { getDate } from '../common/util';
 
 function Detail({
   members,

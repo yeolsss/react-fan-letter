@@ -16,11 +16,22 @@ import dumyData from '../common/fakeData.json';
 export const Router = () => {
   /* 
     여기 굉장히 복잡해질 예정
+    모든 것이 모여있다....
+    물류 창고가 되어버렸다..
+    사실 이렇게 까지 할 필요는 없었지만..
+    어차피 드릴링 경험할꺼 극한으로 해보자는 생각으로
+    한곳에 다 때려박았다..
   */
+
+  // 판교행 버스 멤버가 담길 state
   const [members, setMembers] = useState([]);
+  // 선택된 멤버 state
   const [memberSelector, setMemberSelector] = useState('0');
 
-  // memberBtn onClick
+  /**
+   * 멤버 선택(버튼, selectbox) 핸들러
+   * @param {*} id // 선택된 멤버 id
+   */
   const handlerOnClickMemberSelector = (id) => {
     setMemberSelector(id);
   };
@@ -83,6 +94,7 @@ export const Router = () => {
 
     const id = uuidv4();
     const mumberId = memberSelector;
+
     const letter = new Letter(
       id,
       mumberId,
@@ -90,6 +102,7 @@ export const Router = () => {
       letterContent.replaceAll('\n', '<br>'),
       getDate(),
     );
+
     const newLetterList = [letter, ...letterList];
     localStorage.setItem(
       LETTER_LOCAL_STORAGE_KEY,
@@ -108,6 +121,7 @@ export const Router = () => {
   const handleOnChangeUpdateLetter = (e) => {
     setLetterUpdateContent(e.target.value);
   };
+  // letter 수정 submit
   const handleOnSubmitUpdateLetter = (e) => {
     e.preventDefault();
     if (validData(letterUpdateContent, '내용', updateLetterContentRef)) return;

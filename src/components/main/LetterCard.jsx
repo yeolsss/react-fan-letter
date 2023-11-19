@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 
 function LetterCard({ memberSelector, children }) {
   return (
-    <Link to={`/detail/memberSelector/${children.id}`}>
+    <Link to={`/detail/${memberSelector}/${children.id}`}>
       <StLetterCard>
         <Avatar imgPath={children.avatar} />
         <StLetterInfo>

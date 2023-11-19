@@ -4,9 +4,8 @@ import { StHeader, StHomeBtn, StNav } from '../styles/header/StHeader';
 import { useMatch, useNavigate } from 'react-router-dom';
 
 function Header({ members, membersBtnSelector }) {
-  // 용승, 진호, 명섭, 민석, 유나, 미래
   const navigate = useNavigate();
-  const match = useMatch('/detail/:id');
+  const match = useMatch('/detail/:memberId/:id');
   const handleOnClickHomeBtn = () => {
     navigate('/');
   };
