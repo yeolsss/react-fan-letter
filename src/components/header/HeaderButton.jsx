@@ -3,7 +3,7 @@ import { StHeaderBtnLi } from '../../styles/header/StHeader';
 
 function HeaderButton({ membersBtnSelector, children }) {
   const { memberSelector, handlerOnClickMemberSelector } = membersBtnSelector;
-  const match = useMatch('/detail/:id');
+  const match = useMatch('/detail/:memberId/:id');
 
   return (
     <StHeaderBtnLi

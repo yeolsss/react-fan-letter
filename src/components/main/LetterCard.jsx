@@ -6,9 +6,9 @@ import {
 } from '../../styles/main/StLetterCardComponent';
 import { Link } from 'react-router-dom';
 
-function LetterCard({ children }) {
+function LetterCard({ memberSelector, children }) {
   return (
-    <Link to={`/detail/${children.id}`}>
+    <Link to={`/detail/memberSelector/${children.id}`}>
       <StLetterCard>
         <Avatar imgPath={children.avatar} />
         <StLetterInfo>

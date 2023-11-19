@@ -8,11 +8,28 @@ import {
   LETTER_LOCAL_STORAGE_KEY,
   Letter,
   getDate,
+  getMembers,
   validData,
 } from '../common/util';
 import dumyData from '../common/fakeData.json';
 
-export const Router = ({ members, membersBtnSelector }) => {
+export const Router = () => {
+  /* 
+    여기 굉장히 복잡해질 예정
+  */
+  const [members, setMembers] = useState([]);
+  const [memberSelector, setMemberSelector] = useState('0');
+
+  // memberBtn onClick
+  const handlerOnClickMemberSelector = (id) => {
+    setMemberSelector(id);
+  };
+
+  // memberList useEffect
+  useEffect(() => {
+    setMembers(getMembers);
+  }, []);
+
   // * letter NickName state
   const [letterNickName, setLetterNickName] = useState('');
   // * letter content state
@@ -37,7 +54,7 @@ export const Router = ({ members, membersBtnSelector }) => {
   const [letterList, setLetterList] = useState(letters);
 
   const currentMemberLetter = letterList.filter(
-    (letter) => letter.writedTo === membersBtnSelector.memberSelector,
+    (letter) => letter.writedTo === memberSelector,
   );
 
   const onChangeLetterNickName = (e) => {
@@ -50,8 +67,7 @@ export const Router = ({ members, membersBtnSelector }) => {
   // selectbox controll
   const onChangeMemberSelectBox = (e) => {
     const memberId = e.target.value;
-    membersBtnSelector.setMemberSelector(memberId);
-    setMemberSelectBox(memberId);
+    setMemberSelector(memberId);
   };
 
   // letter 등록
@@ -66,7 +82,7 @@ export const Router = ({ members, membersBtnSelector }) => {
       return;
 
     const id = uuidv4();
-    const mumberId = membersBtnSelector.memberSelector;
+    const mumberId = memberSelector;
     const letter = new Letter(
       id,
       mumberId,
@@ -124,15 +140,21 @@ export const Router = ({ members, membersBtnSelector }) => {
   };
 
   useEffect(() => {
-    setMemberSelectBox(membersBtnSelector.memberSelector);
-  }, [membersBtnSelector.memberSelector]);
+    setMemberSelectBox(memberSelector);
+  }, [memberSelector]);
 
   return (
     <BrowserRouter>
       <Routes>
         <Route
           element={
-            <Layout members={members} membersBtnSelector={membersBtnSelector} />
+            <Layout
+              members={members}
+              membersBtnSelector={{
+                memberSelector,
+                handlerOnClickMemberSelector,
+              }}
+            />
           }
         >
           <Route
@@ -144,7 +166,11 @@ export const Router = ({ members, membersBtnSelector }) => {
                 onSubmitLetter={onSubmitLetter}
                 handlers={{ onChangeLetterNickName, onChangeLetterContent }}
                 states={{ letterNickName, letterContent }}
-                memberSelectBox={{ memberSelectBox, onChangeMemberSelectBox }}
+                memberSelectBox={{
+                  memberSelectBox,
+                  onChangeMemberSelectBox,
+                  memberSelector,
+                }}
                 refs={{ letterNickNameRef, letterContentRef }}
                 currentMemberLetter={currentMemberLetter}
               />
@@ -152,7 +178,7 @@ export const Router = ({ members, membersBtnSelector }) => {
           />
           <Route
             exact
-            path="/detail/:id"
+            path="/detail/:memberId/:id"
             element={
               <Detail
                 members={members}

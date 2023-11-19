@@ -42,7 +42,7 @@ function Detail({
             <Avatar imgPath={avatar} />
             <h1>{nickname}</h1>
           </div>
-          <span> {createdAt}</span>
+          <span> {getDate(createdAt)}</span>
         </StWriterInfoWrapper>
 
         <StMemberNameWrapper>

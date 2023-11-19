@@ -32,7 +32,12 @@ function Home({
           </StEmptyDataLi>
         ) : (
           currentMemberLetter.map((letter) => (
-            <LetterCard key={letter.id}>{letter}</LetterCard>
+            <LetterCard
+              key={letter.id}
+              memberSelector={memberSelectBox.memberSelector}
+            >
+              {letter}
+            </LetterCard>
           ))
         )}
       </StLetterList>
