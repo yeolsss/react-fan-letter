@@ -113,14 +113,17 @@ export const Router = () => {
     setLetterNickName('');
     setLetterContent('');
   };
+
   // letter 수정 버튼
   const handleOnClickUpdateBtn = () => {
     setUpdateState(true);
   };
+
   // letter 수정
   const handleOnChangeUpdateLetter = (e) => {
     setLetterUpdateContent(e.target.value);
   };
+
   // letter 수정 submit
   const handleOnSubmitUpdateLetter = (e) => {
     e.preventDefault();
