@@ -6,14 +6,8 @@ import { LetterContext } from './context/LetterContext';
 import dumyData from './common/fakeData.json';
 
 function App() {
-  /* 
-    여기 굉장히 복잡해질 예정
-  */
-  // 용승, 진호, 명섭, 민석, 유나, 미래
   const [members, setMembers] = useState([]);
   const [memberSelector, setMemberSelector] = useState('0');
-  // ! localStorage get data
-  // ! 빈 값일 경우 dumyData로 초기화
   const letters =
     JSON.parse(localStorage.getItem(LETTER_LOCAL_STORAGE_KEY)) || dumyData;
 
