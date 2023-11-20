@@ -10,6 +10,5 @@
 
 ## 스크린샷
 
-![Alt text](<Screen Shot 2023-11-15 at 8.30.54 PM.png>)
-
-![Alt text](<Screen Shot 2023-11-15 at 8.32.16 PM.png>)
+![Alt text](<Screen Shot 2023-11-20 at 10.58.26 AM.png>)
+![Alt text](<Screen Shot 2023-11-20 at 10.58.32 AM.png>)
